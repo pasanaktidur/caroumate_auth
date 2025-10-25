@@ -187,6 +187,9 @@ export default function App() {
 
                     if (insertError) {
                         console.error("Error creating new user profile:", insertError);
+                        await supabase.auth.signOut();
+                        setPostLoginError(t('errorProfileFetch'));
+                        setView('LOGIN');
                     } else {
                         // Successfully created profile, now set state and direct to setup.
                         const userProfile: UserProfile = {
