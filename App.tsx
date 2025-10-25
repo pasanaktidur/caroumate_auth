@@ -97,9 +97,12 @@ export default function App() {
     
     const [authModal, setAuthModal] = React.useState<'signup' | 'signin' | null>(null);
     const [authError, setAuthError] = React.useState<string | null>(null);
+    const [postLoginError, setPostLoginError] = React.useState<string | null>(null);
+
 
     const openAuthModal = (modal: 'signup' | 'signin') => {
         setAuthError(null);
+        setPostLoginError(null);
         setAuthModal(modal);
     };
 
@@ -150,6 +153,7 @@ export default function App() {
     React.useEffect(() => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
             if (session) {
+                setPostLoginError(null); // Clear any previous login errors on a new session event
                 // Check if a profile exists for this user.
                 const { data: profile, error: profileError } = await supabase
                     .from('profiles')
@@ -197,6 +201,9 @@ export default function App() {
                     }
                 } else if (profileError) {
                     console.error('Error fetching profile:', profileError);
+                    await supabase.auth.signOut();
+                    setPostLoginError(t('errorProfileFetch'));
+                    setView('LOGIN');
                 }
             } else {
                 // No session, user is logged out.
@@ -206,7 +213,7 @@ export default function App() {
         });
 
         return () => subscription.unsubscribe();
-    }, []);
+    }, [t]);
 
     // --- Data Persistence Effects ---
     React.useEffect(() => {
@@ -970,7 +977,7 @@ export default function App() {
 
     const renderContent = () => {
         switch (view) {
-            case 'LOGIN': return <LoginScreen onSignUpClick={() => openAuthModal('signup')} onSignInClick={() => openAuthModal('signin')} t={t} />;
+            case 'LOGIN': return <LoginScreen onSignUpClick={() => openAuthModal('signup')} onSignInClick={() => openAuthModal('signin')} t={t} error={postLoginError} />;
             case 'PROFILE_SETUP': return <ProfileSetupModal user={user!} onSetupComplete={handleProfileSetup} t={t} />;
             case 'DASHBOARD': return (
                 <Dashboard
@@ -1041,7 +1048,7 @@ export default function App() {
                     content={translations[language].tutorial}
                 />
             );
-            default: return <LoginScreen onSignUpClick={() => openAuthModal('signup')} onSignInClick={() => openAuthModal('signin')} t={t} />;
+            default: return <LoginScreen onSignUpClick={() => openAuthModal('signup')} onSignInClick={() => openAuthModal('signin')} t={t} error={postLoginError} />;
         }
     };
 

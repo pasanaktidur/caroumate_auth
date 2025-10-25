@@ -62,7 +62,7 @@ const LandingPageHeader: React.FC<{ onSignUpClick: () => void; onSignInClick: ()
     );
 }
 
-export const LoginScreen: React.FC<{ onSignUpClick: () => void; onSignInClick: () => void; t: TFunction; }> = ({ onSignUpClick, onSignInClick, t }) => {
+export const LoginScreen: React.FC<{ onSignUpClick: () => void; onSignInClick: () => void; t: TFunction; error: string | null; }> = ({ onSignUpClick, onSignInClick, t, error }) => {
     return (
         <div className="bg-gray-50 dark:bg-gray-950">
             <LandingPageHeader onSignUpClick={onSignUpClick} onSignInClick={onSignInClick} t={t} />
@@ -82,6 +82,13 @@ export const LoginScreen: React.FC<{ onSignUpClick: () => void; onSignInClick: (
                                 <p className="mt-3 text-base text-gray-600 dark:text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                                     {t('loginSubtitle')}
                                 </p>
+                                {error && (
+                                    <div className="mt-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 rounded-md">
+                                        <p className="text-sm font-medium text-red-800 dark:text-red-200 text-center sm:text-left">
+                                            {error}
+                                        </p>
+                                    </div>
+                                )}
                                 <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:mx-0 lg:text-left">
                                     <button
                                         onClick={onSignUpClick}
