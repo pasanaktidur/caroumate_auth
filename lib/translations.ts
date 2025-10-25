@@ -155,6 +155,8 @@ export const translations = {
     refineImagePlaceholder: 'e.g., "make the background a sunset"',
     refineImageButton: 'Refine',
 
+    // Loader
+    initializingProfile: 'Initializing profile...',
 
     // SlideCard
     generatingVisual: 'Generating visual...',
@@ -433,6 +435,9 @@ export const translations = {
     refineImagePrompt: 'Sempurnakan Gambar',
     refineImagePlaceholder: 'cth., "jadikan latar belakangnya matahari terbenam"',
     refineImageButton: 'Sempurnakan',
+
+    // Loader
+    initializingProfile: 'Menginisialisasi profil...',
 
     // SlideCard
     generatingVisual: 'Membuat visual...',

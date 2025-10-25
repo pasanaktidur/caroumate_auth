@@ -26,6 +26,7 @@ import { TutorialScreen } from './components/TutorialScreen';
 import { AiAssistantModal } from './components/AiAssistantModal';
 import { CaptionModal } from './components/CaptionModal';
 import { ThreadModal } from './components/ThreadModal';
+import { Loader } from './components/Loader';
 
 export type TFunction = (key: string, params?: { [key: string]: any }) => string;
 
@@ -981,7 +982,7 @@ export default function App() {
     const renderContent = () => {
         switch (view) {
             case 'LOGIN': return <LoginScreen onSignUpClick={() => openAuthModal('signup')} onSignInClick={() => openAuthModal('signin')} t={t} error={postLoginError} />;
-            case 'PROFILE_SETUP': return <ProfileSetupModal user={user!} onSetupComplete={handleProfileSetup} t={t} />;
+            case 'PROFILE_SETUP': return user ? <ProfileSetupModal user={user} onSetupComplete={handleProfileSetup} t={t} /> : <div className="flex-grow flex items-center justify-center"><Loader text={t('initializingProfile')} /></div>;
             case 'DASHBOARD': return (
                 <Dashboard
                     onNewCarousel={startNewCarousel}
