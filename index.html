@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarouMate: AI Carousel Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato&family=Lobster&family=Lora:wght@400;500;600&family=Merriweather&family=Montserrat&family=Open+Sans&family=Oswald&family=PT+Serif&family=Playfair+Display&family=Poppins&family=Raleway&family=Roboto&family=Roboto+Mono&family=Source+Code+Pro&family=Nunito&family=Work+Sans&family=Rubik&family=Bebas+Neue&family=Anton&family=DM+Sans&family=Barlow&family=Cabin&family=Titillium+Web&family=Cormorant+Garamond&family=EB+Garamond&family=Bitter&family=Crimson+Text&family=Spectral&family=Zilla+Slab&family=Cardo&family=Pacifico&family=Caveat&family=Dancing+Script&family=Permanent+Marker&family=Alfa+Slab+One&family=Righteous&family=Satisfy&family=Abril+Fatface&family=Space+Mono&family=IBM+Plex+Mono&family=Indie+Flower&family=Patrick+Hand&family=Playpen+Sans&family=Bree+Serif&family=Chewy&family=Balsamiq+Sans&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Lora', 'serif'],
+              mono: ['Roboto Mono', 'monospace'],
+              lato: ['Lato', 'sans-serif'],
+              lobster: ['Lobster', 'cursive'],
+              merriweather: ['Merriweather', 'serif'],
+              montserrat: ['Montserrat', 'sans-serif'],
+              'open-sans': ['Open Sans', 'sans-serif'],
+              oswald: ['Oswald', 'sans-serif'],
+              'pt-serif': ['PT Serif', 'serif'],
+              'playfair-display': ['Playfair Display', 'serif'],
+              poppins: ['Poppins', 'sans-serif'],
+              raleway: ['Raleway', 'sans-serif'],
+              roboto: ['Roboto', 'sans-serif'],
+              'source-code-pro': ['Source Code Pro', 'monospace'],
+              // Added Fonts
+              nunito: ['Nunito', 'sans-serif'],
+              'work-sans': ['Work Sans', 'sans-serif'],
+              rubik: ['Rubik', 'sans-serif'],
+              'bebas-neue': ['Bebas Neue', 'cursive'],
+              anton: ['Anton', 'sans-serif'],
+              'dm-sans': ['DM Sans', 'sans-serif'],
+              barlow: ['Barlow', 'sans-serif'],
+              cabin: ['Cabin', 'sans-serif'],
+              'titillium-web': ['Titillium Web', 'sans-serif'],
+              'cormorant-garamond': ['Cormorant Garamond', 'serif'],
+              'eb-garamond': ['EB Garamond', 'serif'],
+              bitter: ['Bitter', 'serif'],
+              'crimson-text': ['Crimson Text', 'serif'],
+              spectral: ['Spectral', 'serif'],
+              'zilla-slab': ['Zilla Slab', 'serif'],
+              cardo: ['Cardo', 'serif'],
+              pacifico: ['Pacifico', 'cursive'],
+              caveat: ['Caveat', 'cursive'],
+              'dancing-script': ['Dancing Script', 'cursive'],
+              'permanent-marker': ['Permanent Marker', 'cursive'],
+              'alfa-slab-one': ['Alfa Slab One', 'cursive'],
+              righteous: ['Righteous', 'cursive'],
+              satisfy: ['Satisfy', 'cursive'],
+              'abril-fatface': ['Abril Fatface', 'cursive'],
+              'space-mono': ['Space Mono', 'monospace'],
+              'ibm-plex-mono': ['IBM Plex Mono', 'monospace'],
+              'indie-flower': ['Indie Flower', 'cursive'],
+              'patrick-hand': ['Patrick Hand', 'cursive'],
+              // New user-requested fonts
+              'playpen-sans': ['Playpen Sans', 'cursive'],
+              'bree-serif': ['Bree Serif', 'serif'],
+              chewy: ['Chewy', 'cursive'],
+              'balsamiq-sans': ['Balsamiq Sans', 'cursive'],
+            },
+            colors: {
+              primary: { // Turquoise
+                '50': '#effeff',
+                '100': '#dffcff',
+                '200': '#bbf8ff',
+                '300': '#82f2ff',
+                '400': '#42e8f8',
+                '500': '#16d8e6',
+                '600': '#00C2CB',
+                '700': '#009ea8',
+                '800': '#007f88',
+                '900': '#00686f',
+                '950': '#004349',
+              },
+              gold: { // Metallic Gold
+                '50': '#fbf8ef',
+                '100': '#f6efd9',
+                '200': '#eddfb0',
+                '300': '#e3cc87',
+                '400': '#dcb85f',
+                '500': '#D4AF37',
+                '600': '#c59b2c',
+                '700': '#a57d25',
+                '800': '#866324',
+                '900': '#6e5121',
+                '950': '#412d12',
+              },
+              accent: { // Energetic Orange
+                '50': '#fff4f0',
+                '100': '#ffe6dc',
+                '200': '#ffccb9',
+                '300': '#ffac90',
+                '400': '#ff8761',
+                '500': '#FF6F3C',
+                '600': '#f85623',
+                '700': '#ce4018',
+                '800': '#a63519',
+                '900': '#872f1a',
+                '950': '#49150b',
+              },
+              gray: {
+                '50': '#f7f7f7',
+                '100': '#e3e3e3',
+                '200': '#c8c8c8',
+                '300': '#a4a4a4',
+                '400': '#858585',
+                '500': '#6C757D', // Soft Gray
+                '600': '#555d63',
+                '700': '#41464a',
+                '800': '#2a2d30',
+                '900': '#1b1c1e',
+                '950': '#0D0D0D', // Dark Elegant Background
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <script>
+      // Prevents FOUC (Flash of Unstyled Content) for dark mode
+      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "html2canvas": "https://esm.sh/html2canvas@^1.4.1",
+    "jszip": "https://esm.sh/jszip@^3.10.1",
+    "@google/genai": "https://esm.sh/@google/genai",
+    "jspdf": "https://esm.sh/jspdf@^2.5.1",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.44.4"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+  </body>
+</html>
